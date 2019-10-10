@@ -1,0 +1,117 @@
+# 初始化git
+git init
+# 添加用户(设置签名)
+git config --global user.name xxx
+git config --global user.email xxx
+
+# 首次由工作区提交到缓冲区
+git add file_name
+
+# 由工作区提交到本地库
+git commit -m "commit log" file_name
+
+# 查看git状态
+OBgit status 
+
+# 实现版本的前进和后退
+
+# 查看版本提交记录
+git log 
+
+git log --pretty=oneline
+git log --oneline
+git reflog
+
+# 控制版本前进与后退
+# way1.使用git relog，确定索引 ，然后使用下面命令
+git reset --hard [index_number]
+
+# way2.使用^符号表示朝前退，使用git log --oneline
+git reset --hard HEAD^  # 朝前退一个
+
+git reset --hard HEAD^^^ # 朝前退3个,^
+
+git reset --hard HEAD~3  # 朝前退3个，和上面的效果是一样的
+
+# 查看帮助,是在线文档
+git help [command]
+git help reset
+
+# 对比 reset参数
+#  --soft 	仅仅在本地库移动HEAD指针
+#  --mixed	上一步的基础上重置缓存区
+#  --hard	上一步的基础上重置工作区
+
+# 找回删除文件(文件提交到本地库了)
+git reset --hard HEAD   # 删除操作没提交到本地库 
+git reset --hard HEAD^  # 删除操作提交到本地库，就移动指针
+
+
+# 比较文件
+git diff [filename]	#工作区和缓冲区比较
+git diff [HEAD] [filename]	#工作区和本地库某个版本比较
+git diff [HEAD]		# 比较所有软件
+
+
+##### 分支：版本控制过程中，使用多条线推进任务
+#
+#	hot_fix		热修复：服务器程序不停
+# 	master ----- 			---合并
+# 	branch1     -----|----
+# 	branch2	    -----|----
+# 
+# 分支之间不会互相影响，并行前行
+
+# 创建分支
+git branch [branch_name]
+
+# 查看所有分支
+git branch -v
+
+# 切换分支
+git checkout [branch_name]
+
+
+# 合并分支
+# 把branch合并到master，
+# 1.首先切换到master上
+# 2.执行merge命令
+
+git checkout master
+git branch -v
+git merge branch
+
+# 即完成合并
+
+
+# 冲突解决的方法
+#
+# 本分支的内容
+# <<<<<<< HEAD
+#        print("this is hot_fix")#hot_fix
+# =======
+# 另一个分支的内容
+#        print("this is master") #master
+# >>>>>>> master
+#
+##直接删除掉特殊符号，编辑到最终结果
+
+# 使用提示命令
+git add [conflict_file]
+# 使用下面命令确认结果
+git commit -m "log"
+
+
+# 哈希 
+# 哈希是一系列的加密算法
+# 特点：1.输入数据多大，哈希算法固定，结果长度固定
+#	2.哈希算法和输入数据确定，结果亦确定
+#	3.哈希算法确定，输入变化，结果亦变化
+#	4.哈希算法不可逆
+#	git底层采用的是SHA-1算法
+#	比如网络传输通过比较哈希计算结果来判断文件是否有损坏
+#
+
+#git 通过快照保存节点，树形结构保存文件，版本前后通过指针关联。
+#
+# 分支管理：通过指针指向同一个HEAD
