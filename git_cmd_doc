@@ -143,4 +143,74 @@ git clone [http://]
 #可以使用git remote -v 查看对应的http网址
 
 
+# 邀请其他成员加入github中
+#    -仓库中有settings->collaborators->输入需要邀请人的账号 -> 复制链接发送给被邀请人  -> 被邀请的人接受就可以了
+#
+#   Windows凭据管理器  会记录账号，不需要时可以删除
+#
+
+# pull = fetch + merge
+#
+# 抓取远程库，并没有改本地工作区的文件
+#
+ git fetch [远程http][分支]
+ git fetch origin master  
+
+# 查看抓取来的文件 
+ git checkout origin/master
+# 然后没问题再合并
+
+ git merge origin/master
+
+# 如果有冲突，github不允许将冲突文件提交
+# 解决方法是pull拉下来，然后合并修改“分支冲突操作”后再次提交。
+#
+
+
+# 跨团队合作
+# A： 创建人    B：团队外合伙人
 # 
+# 1. B到A的github上fork一个
+# 2. B clone到本地，然后修改
+# 3. B 上传到自己的github账号
+# 4. B 在github上选择pull requst 
+# 5. B 然后选择 new pull request
+# 6. B 然后选择Create pull request
+# 7. B 注意要写入请求标题和信息
+#
+# 8. A 在github上登陆自己的账号
+# 9. A 选择pull request，可以看到B 提交的pull request 申请了
+# 10. A 看了内容可以隔空对话，回消息，B也可以回消息
+# 11. A 查看 filechanged 审核代码
+# 12. A 看好了没问题，选择merge pull request，合并代码
+# 13. A 合并的时候写好记录
+# 14. A 可以将合并后的代码拉到本地
+#
+#
+# 操作完成
+
+
+# http 的方式，不是很方便，每次可能要登录
+#
+# SSH 的 相对方便
+# 
+# 1. 进入当前用户家目录，
+#    $ cd ~
+# 2. 删除.ssh目录
+#    $ rm -rvf .ssh
+# 3. 运行命令生成.ssh 密钥目录
+#    $ ssh-keygen -t rsa -C [邮箱地址]
+# 4. 进入.ssh目录查看文件列表
+#    $ cd .ssh
+#    $ ls -IF
+# 5. 查看id_rsa.pub文件的内容
+#    $ cat id_rsa.pub
+# 6. 复制id_rsa.pub文件内容，登录github，点击用户头像->setting->SSH and GPG
+# 7. new SSH Key
+# 8. 输入复制 的内容
+# 
+# 9. 回到git bash 创建远程地址和别名
+#    $ git remote add origin_ssh [ssh 文件链接(github中下载地方可以选)]
+# 10。 完成，可以推送测试
+#
+#
