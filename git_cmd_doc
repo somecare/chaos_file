@@ -115,3 +115,32 @@ git commit -m "log"
 #git 通过快照保存节点，树形结构保存文件，版本前后通过指针关联。
 #
 # 分支管理：通过指针指向同一个HEAD
+#
+#
+
+
+#### git 与github之间的交互
+
+# 使用git remote -v 查看添加的远程连接内容，
+git remote -v
+
+# 使用git remote add origin [http://...]增加远程链接
+git remote add origin []
+
+
+# 上传 git + push + origin + 分支名
+git push origin master
+
+# 克隆
+# 一条指令完成下面三个动作
+#
+# 1.把完整的远程库下载到本地
+# 2.创建origin远程地址别名   使用git remote -v
+# 3.自动初始化本地库  有.git 说明的
+
+git clone [http://]
+
+#可以使用git remote -v 查看对应的http网址
+
+
+# 
