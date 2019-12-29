@@ -1,0 +1,99 @@
+
+# 类就是一组用来描述如何生成一个对象的代码段，在python中仍然成立
+
+# 类与类创建出来的类都是类对象
+
+# __metaclass__属性 元类
+"""
+class Person(object):
+	print('---Person class created---')
+	def __init__(self):
+		self.__name = 'Mao'
+
+
+print(Person)
+
+"""
+
+# 类可以动态状态
+"""
+def choose_class(name):
+	if name == 'foo':
+		class Foo(object):
+			pass
+		return Foo
+		
+	else:
+		class Bar(object):
+			pass 
+		return Bar
+		
+myclass = choose_class('foo')
+print(myclass)	#函数返回的是类
+print(myclass())#函数返回的是类实例
+"""
+
+# 也可以用Type创建类，动态创建类，为了兼容其他版本的功能而有此功能，不建议使用
+# type(类名，由父类名称组成的元组(没有为空)，包含属性的字典)
+# 类是元类创建的，元类也是元类创建的
+"""
+def printNum(self):
+	print('---num is %d---'%self.num)
+
+Test2 = type("Test2",(),{'num':2,"printNum":printNum})   #元类 ，type就是创建class的
+
+t2 = Test2()
+
+type(t2)
+"""
+# __metaclass__ 
+
+# 这里必须是三个参数，必须为类名，父类，属性字典
+def upper_attr(class_name,class_parents,class_attr):
+	#遍历属性字典，把不是__开头的属性名字变为大写
+	newAttr = {}
+	for name,value in class_attr.items():
+		if not name.startswith("__"):
+			newAttr[name.upper()] = value
+	
+	#用type创建一个新类
+	return type(class_name,class_parents,newAttr)
+
+class Foo(object,metaclass = upper_attr):
+	#__metaclass__ = upper_attr  #设置Foo类的元类为upper_attr
+	bar = 'bip'
+	
+print(hasattr(Foo,"bar"))
+print(hasattr(Foo,"BAR"))
+
+f = Foo()
+print(f.BAR)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,99 @@
+
+
+# __getattribute__ 对象访问属性时，一定会先访问这个。这个被称为访问拦截器
+
+# 一个对象里不会有方法，只有属性，所谓方法，其实就是通过对象指到对应位置，返回对应函数
+
+
+class Itcast(object):
+	def __init__(self,tmp):
+		self.subject1 = tmp
+		self.subject2 = "cpp"
+		
+	#属性拦截器	
+	def __getattribute__(self,obj):
+		if obj == 'subject1':
+			print('非法访问')
+			return '警察会拘捕你'
+		else:
+			return object.__getattribute__(self,obj)
+			
+	def show(self):
+		print('This is Itcast')
+		
+s = Itcast("python")
+print(s.subject1)
+print(s.subject2)
+
+
+
+
+class person(object):
+	def __getattribute__(self,obj):
+		print('test')
+		if obj.startswith('a'):
+			return '你好'
+		else:
+			# 这里不允许这样做，会出现死循环
+			return self.test
+			
+
+	def test(self):
+		print('hello')
+
+
+# 功能函数
+
+from functools import partial  # 偏函数
+
+# 比如 new_func = partial(func,args)  把一个函数的某些参数设置为默认值，返回一个新的函数
+
+
+# functools 中提供一个wraps的装饰器来消除调用.__doc__查看文档被装饰器覆盖的情况，如下
+
+from functools import wraps
+
+def note(func):
+	"note function"
+	@wraps(func)  # 这里相当于装饰器参数
+	def wrapper():
+		"wrapper function"
+		print("Note something")
+		return func()
+		
+	return wrapper
+
+
+@note
+def test():
+	"test function"
+	print("I am test")
+
+test()
+print(test.__doc__)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,214 @@
+# __ 双下划线表示私有的
+# _ 前单下划线  不可from modeul import * ,但是import medule 可以用，可以禁止子类、对象访问
+# xx_ 单后置下划线，用于避免与关键词冲突
+# import module  
+# 私有属性  ，实际可以访问，_class_private
+# 生成器的一种应用就是协程
+# 闭包：函数体内部再定义一个函数，并且再用到外边函数的变量，返回里边函数的引用，整体成为闭包
+# 装饰器： 闭包组成，多层嵌套的时候，由后向前(程序是由前向后执行)
+#          倒着装饰，正向调用
+# 装饰器内部函数参数要和被装饰的函数的参数、内部函数调用的函数参数一致
+# 类装饰器
+
+
+
+"""
+def w1(func):
+	def inner():
+		print('正在验证权限')
+		if True:
+			print('没有权限')
+		else:
+			func()
+	return inner
+
+#f1 = w1(f1)  下面执行的就是这个操作
+@w1  
+def f1():
+	print('---f1---')
+@w1
+def f2():
+	print('---f2---')
+	
+#
+
+f1()
+f1()
+"""
+
+"""
+def w1(func):
+	print("---正在装饰w1---")
+	def inner():
+		print('---正在验证权限1---')
+		func()
+	return inner
+	
+def w2(func):
+	print("---正在装饰w2---")
+	def inner():
+		print('---正在验证权限2---')
+		func()
+	return inner
+		
+@w1
+@w2
+def f1():
+	print("func1")
+	
+f1()
+	
+f1()
+	
+"""
+# 无参数装饰器和有参数装饰器
+
+"""
+def decorator1(func):
+	print('---1---')
+	def func_in(*arg,**kwargs):
+		print('---In_1---')
+		func(*arg,**kwargs)
+		print('---In_2---')
+	print('---2---')
+	return func_in
+
+@decorator1
+def test1(a,b,c):
+	print('----test----')
+	
+@decorator1
+def test2(a,b):
+	print('---test2---')
+	
+
+test1(11,2,1)
+test2(1,2)
+"""
+
+
+# 装饰器装饰有返回值函数
+"""
+def decorator2(func):
+	print('---decorator-step1----')
+	def func_in(*args,**kwargs):
+		print('----func_in_step1---')
+		a = func(*args,**kwargs)
+		print('----func_in_step2---')
+		return a			# 需要这里返回哦
+		
+	print('---decorator-step2----')
+	return func_in
+	
+@decorator2
+def test1(a,b):
+	print("----test1----")
+	return "I am test1!"
+
+a = test1(1,2)	
+print(a)
+"""
+
+# 通用装饰器
+"""
+def decorator3(func):
+	def func_in(*args,**kwargs):
+		print('---记录日志---')
+		ret = func(*args,**kwargs)
+		return ret
+	return func_in
+	
+@decorator3
+def test1(a,b,c):
+	print('test1')
+	return 'How are you?'
+	
+@decorator3
+def test2():
+	print('test2')
+	
+@decorator3
+def test3():
+	print('test3')
+	return 'what happend?'
+	
+ret = test1(1,2,3)	
+print(f'ret is {ret}')
+ret = test2()	
+print(f'ret is {ret}')
+ret = test3()
+print(f'ret is {ret}')
+"""
+
+# 带有参数的装饰器
+# 传入参数不一样可以做不同的事情哦，我爱学习，加油呢
+
+"""
+def decorator4(pre = None):
+	def closure1(func):
+		def func_in(*args):
+			print('------func_in')
+			print(pre)
+			func(*args)
+		return func_in
+	return closure1
+
+# 先执行decorator4,返回closure1的引用
+# @closure1
+# 使用@closure1 对test进行装饰
+@decorator4('good good study,day day up')
+def test(*args):
+	print('test')
+
+test()
+	
+"""
+"""
+import types.MethodType	
+	
+object1 = types.MethodType(Func,object1)
+"""
+
+"""
+class Person(object):
+		__slots__ = ("name","age")
+		
+person = Person()
+person.addr = 10
+"""
+
+
+
+# 类装饰器 
+"""
+class Test(object):
+	def __init__(self,func):
+		print("---初始化---")
+		print('func name is %s'%func.__name__)
+		self.__func = func
+	def __call__(self):
+		print('---装饰器功能---')
+		print('-----call-----')
+		self.__func()
+		
+		
+# test = Test(test)
+@Test	
+def test():
+	print('----test func---')
+	
+test()
+"""	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
